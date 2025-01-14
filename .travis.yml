@@ -19,14 +19,14 @@ script:
   - docker build -t udagram-api-user ./udagram-api-user
   - docker build -t udagram-frontend ./udagram-frontend
   - docker build -t udagram-reverseproxy ./udagram-reverseproxy
-  - docker tag udagram-api-feed wjenkins3/udagram-api-feed:v1
-  - docker tag udagram-api-user wjenkins3/udagram-api-user:v1
-  - docker tag udagram-frontend wjenkins3/udagram-frontend:v1
-  - docker tag udagram-reverseproxy wjenkins3/udagram-reverseproxy:v1
+  - docker tag udagram-api-feed "$DOCKER_USERNAME"/udagram-api-feed:v1
+  - docker tag udagram-api-user "$DOCKER_USERNAME"/udagram-api-user:v1
+  - docker tag udagram-frontend "$DOCKER_USERNAME"/udagram-frontend:v1
+  - docker tag udagram-reverseproxy "$DOCKER_USERNAME"/udagram-reverseproxy:v1
 
 after_success:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push wjenkins3/udagram-api-feed:v1
-  - docker push wjenkins3/udagram-api-user:v1
-  - docker push wjenkins3/udagram-frontend:v1
-  - docker push wjenkins3/udagram-reverseproxy:v1
+  - docker login -u "$DOCKER_USERNAME" -p (echo "$DOCKER_PASSWORD")
+  - docker push "$DOCKER_USERNAME"/udagram-api-feed:v1
+  - docker push "$DOCKER_USERNAME"/udagram-api-user:v1
+  - docker push "$DOCKER_USERNAME"/udagram-frontend:v1
+  - docker push "$DOCKER_USERNAME"/udagram-reverseproxy:v1
